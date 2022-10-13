@@ -134,6 +134,36 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
                 throw ex;
             }
         }
+        public void SetTestNodePassed(string gherkinKeyword, string stepInfo)
+        {
+            try
+            {
+                test.CreateNode(gherkinKeyword, stepInfo).Pass("Step Executed Sucessfully!");
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex);
+                throw ex;
+            }
+        }
+        public void SetTestNodeFailed(string gherkinKeyword, string stepInfo, string message, string strPathToSSFile = null)
+        {
+            try
+            {
+                var printMessage = "<p><b>Test FAILED!</b></p>" + $"Message: <br>{message}<br>";
+                test.CreateNode(gherkinKeyword, stepInfo).Fail("Step Failed!");
+
+                if (!string.IsNullOrEmpty(strPathToSSFile))
+                {
+                    test.AddScreenCaptureFromPath(strPathToSSFile);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex);
+                throw ex;
+            }
+        }
         public void CloseExtentReport()
         {
             try
