@@ -439,6 +439,7 @@
     <Compile Include="TestSetup\BasePage.cs" />
     <Compile Include="TestSetup\TestHookup.cs" />
     <Compile Include="UI_Helpers\CommonUtilities.cs" />
+    <Compile Include="UI_Helpers\DriverCapabilities.cs" />
     <Compile Include="UI_Helpers\ErrorLogger.cs" />
     <Compile Include="UI_Helpers\ExtentReportHelper.cs" />
   </ItemGroup>

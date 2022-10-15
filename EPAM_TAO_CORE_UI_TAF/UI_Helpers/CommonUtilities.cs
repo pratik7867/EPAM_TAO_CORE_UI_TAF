@@ -14,9 +14,9 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
         private static readonly object syncLock = new object();
         private static CommonUtilities _commonUtilities = null;
 
-        private static Actions actions;
+        private Actions actions;
 
-        private static string strParentDir, strSSDir, strPathToSSFile;
+        private string strParentDir, strSSDir, strPathToSSFile;
 
         CommonUtilities()
         {
@@ -340,24 +340,26 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
             }
         }
 
+        #endregion
+
         #region Additonal Utils
 
         public string TakeScreenshot(IWebDriver driver, string strSSFileName)
         {
             try
-            {                
+            {
                 strParentDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), DateTime.Now.ToString("dd-MM-yyyy"));
                 strSSDir = strParentDir + @"\" + "Screenshots";
 
-                lock(syncLock)
+                lock (syncLock)
                 {
-                    if(!Directory.Exists(strParentDir))
+                    if (!Directory.Exists(strParentDir))
                     {
                         Directory.CreateDirectory(strParentDir);
                     }
                     else
                     {
-                        if(!Directory.Exists(strSSDir))
+                        if (!Directory.Exists(strSSDir))
                         {
                             Directory.CreateDirectory(strSSDir);
                         }
@@ -372,7 +374,7 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
 
                 return strPathToSSFile;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex, driver);
                 throw ex;
@@ -386,14 +388,12 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
             {
                 return driver.Title;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex, driver);
                 throw ex;
             }
         }
-
-        #endregion
 
         #endregion
 

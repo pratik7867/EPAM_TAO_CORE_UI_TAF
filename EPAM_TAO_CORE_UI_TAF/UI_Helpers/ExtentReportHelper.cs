@@ -2,7 +2,6 @@
 using System.IO;
 using System.Reflection;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 
@@ -11,9 +10,7 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
     public class ExtentReportHelper
     {
         private static readonly object syncLock = new object();
-        private static ExtentReportHelper _extentReportHelper = null;
-
-        private string strBrowserName, strBrowserVersion;
+        private static ExtentReportHelper _extentReportHelper = null;        
 
         public ExtentReports extent { get; set; }
         public ExtentHtmlReporter reporter { get; set; }
@@ -33,33 +30,10 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
                 extent.AddSystemInfo("Application Under Test", strAUT);
                 extent.AddSystemInfo("Environment", "QA");
                 extent.AddSystemInfo("Machine", Environment.MachineName);
-                extent.AddSystemInfo("OS", Environment.OSVersion.VersionString);
+                extent.AddSystemInfo("OS", Environment.OSVersion.VersionString);                
 
-                ICapabilities browserCap = ((RemoteWebDriver)driver).Capabilities;
-                if (!string.IsNullOrEmpty(browserCap.GetCapability("browserName").ToString()))
-                {
-                    strBrowserName = browserCap.GetCapability("browserName").ToString();
-                }
-                else
-                {
-                    strBrowserName = "";
-                }
-
-                if (!string.IsNullOrEmpty(browserCap.GetCapability("version").ToString()))
-                {
-                    strBrowserVersion = browserCap.GetCapability("version").ToString();
-                }
-                else if (!string.IsNullOrEmpty(browserCap.GetCapability("browserVersion").ToString()))
-                {
-                    strBrowserVersion = browserCap.GetCapability("browserVersion").ToString();
-                }
-                else
-                {
-                    strBrowserVersion = "";
-                }
-
-                extent.AddSystemInfo("Browser", strBrowserName);
-                extent.AddSystemInfo("Browser Version", strBrowserVersion);
+                extent.AddSystemInfo("Browser", DriverCapabilities.driverCapabilities.GetBrowserName(driver));
+                extent.AddSystemInfo("Browser Version", DriverCapabilities.driverCapabilities.GetBrowserVersion(driver));
             }
             catch (Exception ex)
             {

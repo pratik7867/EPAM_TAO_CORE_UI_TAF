@@ -2,7 +2,6 @@
 using System.IO;
 using System.Reflection;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
 
 namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
 {
@@ -42,29 +41,8 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
             {
                 if(driver != null)
                 {
-                    ICapabilities capabilities = ((RemoteWebDriver)driver).Capabilities;
-
-                    if (!string.IsNullOrEmpty(capabilities.GetCapability("browserName").ToString()))
-                    {
-                        strBrowserName = capabilities.GetCapability("browserName").ToString();
-                    }
-                    else
-                    {
-                        strBrowserName = "";
-                    }
-
-                    if(!string.IsNullOrEmpty(capabilities.GetCapability("version").ToString()))
-                    {
-                        strBrowserVersion = capabilities.GetCapability("version").ToString();
-                    }
-                    else if(!string.IsNullOrEmpty(capabilities.GetCapability("browserVersion").ToString()))
-                    {
-                        strBrowserVersion = capabilities.GetCapability("browserVersion").ToString();
-                    }
-                    else
-                    {
-                        strBrowserVersion = "";
-                    }                    
+                    strBrowserName = DriverCapabilities.driverCapabilities.GetBrowserName(driver);
+                    strBrowserVersion = DriverCapabilities.driverCapabilities.GetBrowserVersion(driver);
                 }
                 else
                 {
