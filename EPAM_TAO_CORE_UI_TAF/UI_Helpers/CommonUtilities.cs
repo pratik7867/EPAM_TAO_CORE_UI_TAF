@@ -5,6 +5,7 @@ using System.Reflection;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
 {
@@ -35,7 +36,7 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
                     return _commonUtilities;
                 }
             }
-        }
+        }        
 
         #region Navigation Utils
 
@@ -59,6 +60,36 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
                 driver.Manage().Window.Maximize();
             }
             catch(Exception ex)
+            {
+                ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex, driver);
+                throw ex;
+            }
+        }
+
+        #endregion
+
+        #region Find Element(s) Utils
+
+        public IWebElement GetElement(IWebDriver driver, By locator)
+        {
+            try
+            {
+                return driver.FindElement(locator);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex, driver);
+                throw ex;
+            }
+        }
+
+        public IList<IWebElement> GetElements(IWebDriver driver, By locator)
+        {
+            try
+            {
+                return driver.FindElements(locator);
+            }
+            catch (Exception ex)
             {
                 ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex, driver);
                 throw ex;
@@ -132,6 +163,106 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
             catch (Exception ex)
             {
                 ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex, driver);
+                throw ex;
+            }
+        }
+
+        #endregion
+
+        #region IFrame Utils        
+
+        public void WaitForIFrameAndSwitchToIt(IWebDriver driver, By locator, int intWaitForNoOfSeconds)
+        {
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(intWaitForNoOfSeconds)).Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(locator));
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex, driver);
+                throw ex;
+            }
+        }
+
+        public void WaitForIFrameAndSwitchToIt(IWebDriver driver, string strFrame, int intWaitForNoOfSeconds)
+        {
+            try
+            {
+                new WebDriverWait(driver, TimeSpan.FromSeconds(intWaitForNoOfSeconds)).Until(ExpectedConditions.FrameToBeAvailableAndSwitchToIt(strFrame));
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex, driver);
+                throw ex;
+            }
+        }
+
+        public void SwitchToParentFrame(IWebDriver driver)
+        {
+            try
+            {
+                driver.SwitchTo().ParentFrame();
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex, driver);
+                throw ex;
+            }
+        }
+
+        public void SwitchToDefaultContent(IWebDriver driver)
+        {
+            try
+            {
+                driver.SwitchTo().DefaultContent();
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex, driver);
+                throw ex;
+            }
+        }
+
+
+        #endregion
+
+        #region Drop-Down Utils
+
+        public void SelectOptionByIndex(SelectElement selectElement, int intIndex)
+        {
+            try
+            {
+                selectElement.SelectByIndex(intIndex);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex);
+                throw ex;
+            }
+        }
+
+        public void SelectOptionByValue(SelectElement selectElement, string strValue)
+        {
+            try
+            {
+                selectElement.SelectByValue(strValue);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex);
+                throw ex;
+            }
+        }
+
+        public void SelectOptionByText(SelectElement selectElement, string strText, bool boolIsPartialMatch = false)
+        {
+            try
+            {
+                selectElement.SelectByText(strText, boolIsPartialMatch);
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex);
                 throw ex;
             }
         }

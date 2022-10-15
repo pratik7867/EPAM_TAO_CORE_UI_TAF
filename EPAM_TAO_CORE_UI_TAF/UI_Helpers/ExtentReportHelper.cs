@@ -13,6 +13,8 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
         private static readonly object syncLock = new object();
         private static ExtentReportHelper _extentReportHelper = null;
 
+        private string strBrowserName, strBrowserVersion;
+
         public ExtentReports extent { get; set; }
         public ExtentHtmlReporter reporter { get; set; }
         public ExtentTest test { get; set; }
@@ -34,8 +36,30 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
                 extent.AddSystemInfo("OS", Environment.OSVersion.VersionString);
 
                 ICapabilities browserCap = ((RemoteWebDriver)driver).Capabilities;
-                extent.AddSystemInfo("Browser", browserCap.BrowserName);
-                extent.AddSystemInfo("Browser Version", browserCap.Version);
+                if (!string.IsNullOrEmpty(browserCap.GetCapability("browserName").ToString()))
+                {
+                    strBrowserName = browserCap.GetCapability("browserName").ToString();
+                }
+                else
+                {
+                    strBrowserName = "";
+                }
+
+                if (!string.IsNullOrEmpty(browserCap.GetCapability("version").ToString()))
+                {
+                    strBrowserVersion = browserCap.GetCapability("version").ToString();
+                }
+                else if (!string.IsNullOrEmpty(browserCap.GetCapability("browserVersion").ToString()))
+                {
+                    strBrowserVersion = browserCap.GetCapability("browserVersion").ToString();
+                }
+                else
+                {
+                    strBrowserVersion = "";
+                }
+
+                extent.AddSystemInfo("Browser", strBrowserName);
+                extent.AddSystemInfo("Browser Version", strBrowserVersion);
             }
             catch (Exception ex)
             {

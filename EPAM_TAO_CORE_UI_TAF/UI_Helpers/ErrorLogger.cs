@@ -44,8 +44,27 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
                 {
                     ICapabilities capabilities = ((RemoteWebDriver)driver).Capabilities;
 
-                    strBrowserName = capabilities.BrowserName;
-                    strBrowserVersion = capabilities.Version;
+                    if (!string.IsNullOrEmpty(capabilities.GetCapability("browserName").ToString()))
+                    {
+                        strBrowserName = capabilities.GetCapability("browserName").ToString();
+                    }
+                    else
+                    {
+                        strBrowserName = "";
+                    }
+
+                    if(!string.IsNullOrEmpty(capabilities.GetCapability("version").ToString()))
+                    {
+                        strBrowserVersion = capabilities.GetCapability("version").ToString();
+                    }
+                    else if(!string.IsNullOrEmpty(capabilities.GetCapability("browserVersion").ToString()))
+                    {
+                        strBrowserVersion = capabilities.GetCapability("browserVersion").ToString();
+                    }
+                    else
+                    {
+                        strBrowserVersion = "";
+                    }                    
                 }
                 else
                 {
