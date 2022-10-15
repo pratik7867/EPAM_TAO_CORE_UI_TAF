@@ -68,6 +68,23 @@ namespace EPAM_TAO_CORE_UI_TAF.UI_Helpers
 
         #endregion
 
+        #region Dynamic Locator Value Replacement Util
+
+        public string GetDynamicLocatorString(string strLocator, string strEntity, string strReplacementOfOldValue, string strReplacementWithNewValue)
+        {
+            try
+            {
+                return string.Format(strLocator, strEntity.Replace(strReplacementOfOldValue, strReplacementWithNewValue));
+            }
+            catch(Exception ex)
+            {
+                ErrorLogger.errorLogger.ErrorLog(MethodBase.GetCurrentMethod().Name, ex);
+                throw ex;
+            }
+        }
+
+        #endregion
+
         #region Find Element(s) Utils
 
         public IWebElement GetElement(IWebDriver driver, By locator)
