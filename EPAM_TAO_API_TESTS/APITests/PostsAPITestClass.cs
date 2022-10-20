@@ -22,7 +22,7 @@ namespace EPAM_TAO_API_TESTS.APITests
         Dictionary<string, dynamic> dictOfPostsReqData = new Dictionary<string, dynamic>();        
 
         [TestMethod]
-        public void CreatePostAPI()
+        public void A_CreatePostAPI()
         {
             try
             {
@@ -67,7 +67,7 @@ namespace EPAM_TAO_API_TESTS.APITests
         }
 
         [TestMethod]
-        public void UpdatePostAPI()
+        public void B_UpdatePostAPI()
         {
             try
             {
@@ -112,7 +112,7 @@ namespace EPAM_TAO_API_TESTS.APITests
         }
 
         [TestMethod]
-        public void DeletePostAPI()
+        public void C_DeletePostAPI()
         {
             try
             {
